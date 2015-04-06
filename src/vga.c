@@ -11,7 +11,7 @@ void scroll() {
 	// scroll up
 	if (cursor_y >= SCREEN_BUFFER_HEIGHT) {
 		temp = cursor_y - 25 + 1;
-		memcpyw(vga_memory, vga_memory + temp * SCREEN_BUFFER_WIDTH, (25 - temp) * SCREEN_BUFFER_WIDTH * 2);
+		memcpy(vga_memory, vga_memory + temp * SCREEN_BUFFER_WIDTH, (25 - temp) * SCREEN_BUFFER_WIDTH * 2);
 		memsetw(vga_memory + (SCREEN_BUFFER_HEIGHT - temp) * SCREEN_BUFFER_WIDTH, blank, SCREEN_BUFFER_WIDTH);
 		cursor_y = 25 - 1;
 	}
@@ -44,7 +44,7 @@ void put_char(char c) {
 	switch (c) {
 		// backspace
 		case BACKSPACE_CHAR:
-			if (cursor_x) cursor_x--;
+			if (!cursor_x) cursor_x--;
 			break;
 		// tab
 		case TAB_CHAR:
@@ -89,4 +89,5 @@ void set_colour(unsigned char foreground, unsigned char background) {
 void init_video() {
 	vga_memory = (unsigned short*) VGA_START;
 	clear();
+	move_cursor();
 }

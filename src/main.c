@@ -1,22 +1,18 @@
 #include <system.h>
 
-extern unsigned char *memcpy(unsigned char *dest, const unsigned char *src, int count) {
-	for (int i = 0; i < count; i++) {
-		dest[i] = src[i];
+extern void *memcpy(void *restrict dest, const void *restrict src, size_t count) {
+	unsigned char *a = dest;
+	unsigned char *b = src;
+	for (size_t i = 0; i < count; i++) {
+		a[i] = b[i];
 	}
 	return dest;
 }
 
-extern unsigned char *memset(unsigned char *dest, unsigned char val, int count) {
-	for (int i = 0; i < count; i++) {
-		dest[i] = val;
-	}
-	return dest;
-}
-
-extern unsigned short *memcpyw(unsigned short *dest, const unsigned short *src, int count) {
-	for (int i = 0; i < count; i++) {
-		dest[i] = src[i];
+extern void *memset(void *dest, int val, size_t count) {
+	unsigned char *a = dest;
+	for (size_t i = 0; i < count; i++) {
+		a[i] = (unsigned char) val;
 	}
 	return dest;
 }
@@ -30,7 +26,7 @@ extern unsigned short *memsetw(unsigned short *dest, unsigned short val, int cou
 
 extern int strlen(const char *str) {
 	int result = 0;
-	while (str[result] != '\0') {
+	while (str[result] != (char) 0) {
 		result++;
 	}
 	return result;
@@ -46,6 +42,10 @@ extern void write_port(unsigned short port, unsigned char data) {
 	__asm__ __volatile__ ("outb %1, %0" : : "dN" (port), "a" (data));
 }
 
-void kernel_main() {
+int kernel_main() {
+	init_video();
+	set_colour(12, 0);
+	put_str("testing 123");
 	for (;;);
+	return 0;
 }
