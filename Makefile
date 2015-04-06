@@ -6,5 +6,9 @@ all:
 	gcc ${c_flags} -c ${src} -o yashc.o
 	ld -m elf_i386 -T yash.ld -o kernel yash.o yashc.o
 
+clean:
+	@rm -rf bin/
+	@rm *.o
+
 run:
 	qemu-system-i386 -kernel kernel
