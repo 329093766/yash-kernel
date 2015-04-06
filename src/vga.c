@@ -10,10 +10,10 @@ void scroll() {
 
 	// scroll up
 	if (cursor_y >= SCREEN_BUFFER_HEIGHT) {
-		temp = cursor_y - 25 + 1;
-		memcpy(vga_memory, vga_memory + temp * SCREEN_BUFFER_WIDTH, (25 - temp) * SCREEN_BUFFER_WIDTH * 2);
+		temp = cursor_y - SCREEN_BUFFER_HEIGHT + 1;
+		memcpy(vga_memory, vga_memory + temp * SCREEN_BUFFER_WIDTH, (SCREEN_BUFFER_HEIGHT - temp) * SCREEN_BUFFER_WIDTH * 2);
 		memsetw(vga_memory + (SCREEN_BUFFER_HEIGHT - temp) * SCREEN_BUFFER_WIDTH, blank, SCREEN_BUFFER_WIDTH);
-		cursor_y = 25 - 1;
+		cursor_y = SCREEN_BUFFER_HEIGHT - 1;
 	}
 }
 
@@ -76,8 +76,8 @@ void put_char(char c) {
 }
 
 void put_str(char *str) {
-	int str_size = strlen(str);
-	for (int i = 0; i < str_size; i++) {
+	size_t str_size = strlen(str);
+	for (size_t i = 0; i < str_size; i++) {
 		put_char(str[i]);
 	}
 }

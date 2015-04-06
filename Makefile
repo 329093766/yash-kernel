@@ -1,5 +1,5 @@
 CC=gcc
-C_FLAGS= -m32 -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -std=c99 -g -Wall -fno-builtin -Iincludes/
+C_FLAGS= -Wall -Wextra -pedantic -m32 -O0 -std=c99 -finline-functions -nostdinc -ffreestanding -Iincludes/
 LD=ld
 
 all: kernel
