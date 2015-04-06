@@ -41,10 +41,8 @@ void put_char(char c) {
 	unsigned short *where;
 	unsigned att = attribute << 8;
 	
-	if (c == 0x08) {
-		if (cursor_x != 0) {
-			cursor_x--;
-		}
+	if (c == 0x08 && cursor_x != 0) {
+		cursor_x--;
 	}
 	else if (c == 0x09) {
 		cursor_x = (cursor_x + 8) & ~(8 - 1);

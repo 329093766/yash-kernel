@@ -2,7 +2,7 @@
 
 extern void *memcpy(void *restrict dest, const void *restrict src, size_t count) {
 	unsigned char *a = dest;
-	unsigned char *b = src;
+	const unsigned char *b = src;
 	for (size_t i = 0; i < count; i++) {
 		a[i] = b[i];
 	}
@@ -45,7 +45,7 @@ extern void write_port(unsigned short port, unsigned char data) {
 int kernel_main() {
 	init_video();
 	set_colour(12, 0);
-	put_str("testing 123");
+	put_str("VedantIsAcuntOS V1337");
 	for (;;);
 	return 0;
 }

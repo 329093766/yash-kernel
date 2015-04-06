@@ -3,6 +3,7 @@ C_FLAGS= -Wall -Wextra -pedantic -m32 -O0 -std=c99 -finline-functions -nostdinc 
 LD=ld
 
 all: kernel
+	rm -f *.o
 
 kernel: yash.o yash.ld main.o vga.o
 	${LD} -m elf_i386 -T yash.ld -o kernel *.o
