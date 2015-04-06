@@ -38,39 +38,35 @@ void clear() {
 }
 
 void put_char(char c) {
-	unsigned short *loc;
-	unsigned attrib = attribute << 8;
-
-	switch (c) {
-		// backspace
-		case BACKSPACE_CHAR:
-			if (!cursor_x) cursor_x--;
-			break;
-		// tab
-		case TAB_CHAR:
-			cursor_x = (cursor_x + TABSIZE) & ~(TABSIZE - 1);
-			break;
-		// carriage return
-		case '\r':
-			cursor_x = 0;
-			break;
-		// newline
-		case '\n':
-			cursor_x = 0;
-			cursor_y++;
-			break;
-		// space
-		case ' ':
-			loc = vga_memory + (cursor_y * SCREEN_BUFFER_WIDTH + cursor_x);
-			*loc = c | attrib;
-			cursor_x++;
-			break;
+	unsigned short *where;
+	unsigned att = attribute << 8;
+	
+	if (c == 0x08) {
+		if (cursor_x != 0) {
+			cursor_x--;
+		}
 	}
-	if (cursor_x >= SCREEN_BUFFER_WIDTH) {
+	else if (c == 0x09) {
+		cursor_x = (cursor_x + 8) & ~(8 - 1);
+	} 
+	else if (c == '\r') {
+		cursor_x = 0;
+	} 
+	else if (c == '\n') {
+		cursor_x = 0;
+		cursor_y++;
+	} 
+	else if (c >= ' ') {
+		where = vga_memory + (cursor_y * 80 + cursor_x);
+		*where = c | att;
+		cursor_x++;
+	}
+
+	if (cursor_x >= 80) {
 		cursor_x = 0;
 		cursor_y++;
 	}
-
+	
 	scroll();
 	move_cursor();
 }
