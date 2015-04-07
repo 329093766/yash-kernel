@@ -41,11 +41,11 @@ void put_char(char c) {
 	unsigned short *where;
 	unsigned att = attribute << 8;
 	
-	if (c == 0x08 && cursor_x != 0) {
+	if (c == BACKSPACE_CHAR && cursor_x != 0) {
 		cursor_x--;
 	}
-	else if (c == 0x09) {
-		cursor_x = (cursor_x + 8) & ~(8 - 1);
+	else if (c == TAB_CHAR) {
+		cursor_x = (cursor_x + TABSIZE) & ~(TABSIZE - 1);
 	} 
 	else if (c == '\r') {
 		cursor_x = 0;
@@ -55,12 +55,12 @@ void put_char(char c) {
 		cursor_y++;
 	} 
 	else if (c >= ' ') {
-		where = vga_memory + (cursor_y * 80 + cursor_x);
+		where = vga_memory + (cursor_y * SCREEN_BUFFER_WIDTH + cursor_x);
 		*where = c | att;
 		cursor_x++;
 	}
 
-	if (cursor_x >= 80) {
+	if (cursor_x >= SCREEN_BUFFER_WIDTH) {
 		cursor_x = 0;
 		cursor_y++;
 	}

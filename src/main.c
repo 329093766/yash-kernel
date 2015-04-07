@@ -44,8 +44,12 @@ extern void write_port(unsigned short port, unsigned char data) {
 
 int kernel_main() {
 	init_video();
+	// init_gdt();
+	put_str("This is me printing out some text in my kernel!\n");
+
 	set_colour(12, 0);
-	put_str("VedantIsAcuntOS V1337");
+	put_str("Here's some more, but in another colour!\n");
+
 	for (;;);
 	return 0;
 }

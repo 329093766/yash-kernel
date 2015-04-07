@@ -5,7 +5,7 @@ LD=ld
 all: kernel
 	rm -f *.o
 
-kernel: yash.o yash.ld main.o vga.o
+kernel: yash.o yash.ld main.o vga.o gdt.o
 	${LD} -m elf_i386 -T yash.ld -o kernel *.o
 
 %.o: src/%.c
